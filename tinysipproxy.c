@@ -71,7 +71,7 @@ static void ip_to_str(struct in6_addr src, char *dst, socklen_t size) {
 
 static int get_route(struct sockaddr_in6 src, struct in6_addr *dst) {
     int s;
-    fatal_if((s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) < 0);
+    fatal_if((s = socket(AF_INET6, SOCK_DGRAM|SOCK_CLOEXEC, IPPROTO_UDP)) < 0);
     if (connect(s, (struct sockaddr*) &src, sizeof(src)) != 0) {
         fatal_if(close(s) != 0);
         return -1;
